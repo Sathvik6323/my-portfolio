@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sathvik Mallela — Full Stack Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>~</text></svg>">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0a0a0b;--surface:#18181b;--border:#27272a;--text:#e4e4e7;--muted:#a1a1aa;
+      --accent:#f59e0b;--accent-dim:#92400e;--green:#22c55e;--font:'Inter',system-ui,sans-serif;
+      --mono:'JetBrains Mono','Fira Code',monospace;
+    }
+    html{scroll-behavior:smooth;scroll-padding-top:5rem}
+    body{
+      font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--accent);text-decoration:none;transition:color .2s}
+    a:hover{color:#fbbf24}
+
+    .container{max-width:1000px;margin:0 auto;padding:0 1.5rem}
+
+    /* Nav */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:rgba(10,10,11,.85);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    nav .container{
+      display:flex;align-items:center;gap:0.5rem;height:56px;overflow-x:auto;
+    }
+    nav .prompt{
+      font-family:var(--mono);font-size:.8rem;color:var(--green);white-space:nowrap;
+      margin-right:0.5rem;
+    }
+    nav a{
+      font-family:var(--mono);font-size:.78rem;color:var(--muted);white-space:nowrap;
+      padding:.25rem .5rem;border-radius:4px;transition:all .2s;
+    }
+    nav a:hover,nav a.active{color:var(--accent);background:rgba(245,158,11,.1)}
+
+    /* Sections */
+    section{padding:5rem 0}
+    #hero{min-height:100vh;display:flex;align-items:center;padding-top:56px}
+
+    /* Terminal line */
+    .terminal-line{
+      font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-bottom:1rem;
+      display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+    }
+    .terminal-line .prompt{color:var(--green)}
+    .terminal-line .cmd{color:var(--text)}
+
+    /* Hero */
+    .hero-content{max-width:720px}
+    .hero-content h1{
+      font-family:var(--mono);font-size:clamp(1.8rem,5vw,3rem);font-weight:600;
+      margin-bottom:.75rem;letter-spacing:-.02em;
+    }
+    .hero-content h1 .cursor{
+      display:inline-block;width:2px;height:1.2em;background:var(--accent);
+      margin-left:4px;animation:blink 1s step-end infinite;vertical-align:text-bottom;
+    }
+    @keyframes blink{50%{opacity:0}}
+    .typewriter-wrapper{height:2rem;margin-bottom:1.5rem}
+    #typewriter{
+      font-family:var(--mono);font-size:clamp(.85rem,2vw,1.05rem);color:var(--muted);
+    }
+    #typewriter .cursor-blink{
+      display:inline-block;width:1px;height:1.1em;background:var(--muted);
+      margin-left:2px;animation:blink .8s step-end infinite;vertical-align:text-bottom;
+    }
+    .hero-sub{
+      color:var(--muted);font-size:.95rem;margin-bottom:2rem;max-width:540px;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:.4rem;
+      font-family:var(--mono);font-size:.7rem;color:var(--green);
+      border:1px solid rgba(34,197,94,.3);border-radius:20px;padding:.25rem .75rem;
+      margin-bottom:1.5rem;
+    }
+    .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-family:var(--mono);font-size:.85rem;padding:.65rem 1.25rem;
+      border-radius:8px;transition:all .2s;cursor:pointer;border:none;
+      background:var(--accent);color:#000;font-weight:500;
+    }
+    .btn:hover{background:#fbbf24;transform:translateY(-1px)}
+    .btn-outline{
+      background:transparent;color:var(--text);border:1px solid var(--border);
+    }
+    .btn-outline:hover{background:var(--surface);border-color:var(--accent);color:var(--accent)}
+
+    /* Section headers */
+    .section-header{margin-bottom:2.5rem}
+
+    /* About */
+    #about p{color:var(--muted);font-size:.95rem;max-width:650px;margin-bottom:1rem}
+
+    /* Projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+    .project-card{
+      background:var(--surface);border:1px solid var(--border);border-radius:10px;
+      padding:1.5rem;transition:all .25s;display:flex;flex-direction:column;
+    }
+    .project-card:hover{
+      border-color:var(--accent-dim);transform:translateY(-3px);
+      box-shadow:0 8px 30px rgba(0,0,0,.3);
+    }
+    .project-card .prompt{
+      font-family:var(--mono);font-size:.7rem;color:var(--accent);margin-bottom:.35rem;
+    }
+    .project-card h3{
+      font-family:var(--mono);font-size:.95rem;font-weight:600;margin-bottom:.5rem;
+      letter-spacing:-.01em;
+    }
+    .project-card p{
+      font-size:.85rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;flex:1;
+    }
+    .project-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
+    .project-tags span{
+      font-family:var(--mono);font-size:.65rem;padding:.2rem .55rem;
+      border-radius:4px;background:rgba(245,158,11,.1);color:var(--accent);
+      border:1px solid rgba(245,158,11,.15);
+    }
+    .project-links{display:flex;gap:.75rem}
+    .project-links a{
+      font-family:var(--mono);font-size:.75rem;color:var(--muted);
+      display:inline-flex;align-items:center;gap:.3rem;transition:color .2s;
+    }
+    .project-links a:hover{color:var(--accent)}
+
+    /* Skills */
+    .skills-group{margin-bottom:1.5rem}
+    .skills-group:last-child{margin-bottom:0}
+    .skills-group h4{
+      font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-bottom:.6rem;
+      text-transform:uppercase;letter-spacing:.05em;
+    }
+    .skills-group .tags{display:flex;flex-wrap:wrap;gap:.45rem}
+    .skills-group .tags span{
+      font-family:var(--mono);font-size:.75rem;padding:.3rem .65rem;
+      border-radius:6px;background:var(--surface);border:1px solid var(--border);
+      color:var(--text);transition:all .2s;
+    }
+    .skills-group .tags span:hover{border-color:var(--accent-dim);color:var(--accent)}
+
+    /* Experience */
+    .exp-item{border-left:2px solid var(--border);padding-left:1.5rem;margin-bottom:2rem;position:relative}
+    .exp-item::before{
+      content:'';position:absolute;left:-5px;top:6px;width:8px;height:8px;
+      border-radius:50%;background:var(--accent);
+    }
+    .exp-item h3{font-family:var(--mono);font-size:.9rem;font-weight:600}
+    .exp-item .meta{
+      font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-bottom:.75rem;
+    }
+    .exp-item ul{list-style:none;padding:0}
+    .exp-item ul li{
+      font-size:.85rem;color:var(--muted);padding:.25rem 0;padding-left:1rem;
+      position:relative;
+    }
+    .exp-item ul li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
+
+    /* Contact */
+    #contact .links{
+      display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.5rem;
+    }
+    #contact .links a{
+      font-family:var(--mono);font-size:.85rem;color:var(--muted);
+      display:inline-flex;align-items:center;gap:.4rem;transition:color .2s;
+    }
+    #contact .links a:hover{color:var(--accent)}
+    .separator{
+      display:flex;align-items:center;gap:1rem;margin:2rem 0;color:var(--border);
+      font-family:var(--mono);font-size:.8rem;
+    }
+    .separator::before,.separator::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* Footer */
+    footer{
+      text-align:center;padding:2rem 0;border-top:1px solid var(--border);
+      font-family:var(--mono);font-size:.7rem;color:var(--muted);
+    }
+
+    /* Pattern overlay */
+    .bg-pattern{
+      position:fixed;inset:0;pointer-events:none;z-index:-1;
+      background-image:
+        linear-gradient(rgba(39,39,42,.3) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(39,39,42,.3) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+
+    /* Responsive */
+    @media(max-width:640px){
+      .container{padding:0 1rem}
+      section{padding:3rem 0}
+      .projects-grid{grid-template-columns:1fr}
+      nav .container{gap:.25rem}
+      nav a{font-size:.7rem;padding:.2rem .35rem}
+      .hero-actions{flex-direction:column}
+      .btn{justify-content:center}
+      #contact .links{flex-direction:column;gap:.75rem}
+    }
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <span class="prompt">sathvik@portfolio:~$</span>
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#experience">experience</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span> Open to work
+        </div>
+        <h1>> Hello, I'm Sathvik<span class="cursor"></span></h1>
+        <div class="typewriter-wrapper">
+          <span id="typewriter"><span class="cursor-blink"></span></span>
+        </div>
+        <p class="hero-sub">
+          Full Stack Engineer at Accenture (Client: Intuit). I build things that work — serverless platforms, trading bots, GIS tools, and automation systems.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn">$ View Projects</a>
+          <a href="https://github.com/Sathvik6323" class="btn btn-outline" target="_blank">$ GitHub ↗</a>
+          <a href="resume.pdf" class="btn btn-outline" target="_blank">$ Resume ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header terminal-line">
+        <span class="prompt">sathvik@portfolio:~$</span>
+        <span class="cmd">cat about.md</span>
+      </div>
+      <p>
+        I'm a Full Stack Engineer with production experience delivering React/Node.js solutions at Accenture, working on Intuit's 9,000-worker ecosystem. I graduated from IIT Bhubaneswar with a B.Tech in Computer Science (2024).
+      </p>
+      <p>
+        I architected a zero-cost serverless platform serving 2,000+ users and built an automation tool that cut manual processing time by 87%. I enjoy building things across the stack — from Python trading bots to GIS tools to Playwright automation frameworks.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header terminal-line">
+        <span class="prompt">sathvik@portfolio:~$</span>
+        <span class="cmd">ls -la projects/</span>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="prompt">$ prayanam-automation</div>
+          <h3>Prayanam Automation</h3>
+          <p>Serverless ride-matching platform for a 2,000+ member community. Event-driven microservice processing 450+ requests/month at zero infrastructure cost. Reduced ride posting latency by 60%.</p>
+          <div class="project-tags">
+            <span>Google Apps Script</span><span>Python</span><span>Serverless</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Sathvik6323" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="prompt">$ trading-bot</div>
+          <h3>Sentiment-Driven Trading Bot</h3>
+          <p>Intraday trading system using FinBERT sentiment analysis with Upstox API integration. 28-sector basket analysis, 8-condition signal engine with walk-forward backtesting.</p>
+          <div class="project-tags">
+            <span>Python</span><span>Flask</span><span>FinBERT</span><span>Upstox API</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Sathvik6323" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="prompt">$ anantapur-masterplan</div>
+          <h3>Anantapur Master Plan Map</h3>
+          <p>Interactive GIS overlay for 120 Andhra Pradesh town planning master plans. Leaflet.js with opacity comparison slider for comparing DTCP plans with satellite imagery. Public access tool.</p>
+          <div class="project-tags">
+            <span>Leaflet.js</span><span>PDF.js</span><span>GitHub Pages</span>
+          </div>
+          <div class="project-links">
+            <a href="https://sathvik6323.github.io/anantapur-masterplan/" target="_blank">Live ↗</a>
+            <a href="https://github.com/Sathvik6323/anantapur-masterplan" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="prompt">$ grocery-cart</div>
+          <h3>Grocery Cart Automation</h3>
+          <p>Cross-platform price comparison across 6 Indian quick-commerce platforms. Parallel price search, cheapest-per-item selection, and automated cart population. 32 passing tests.</p>
+          <div class="project-tags">
+            <span>Python</span><span>Playwright</span><span>MCP API</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Sathvik6323" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="prompt">$ dealership-review-portal</div>
+          <h3>Dealership Review Portal</h3>
+          <p>Full-stack review platform with role-based access control. Integrated IBM Watson for sentiment analysis. Dockerized microservice deployed on IBM Cloud Code Engine.</p>
+          <div class="project-tags">
+            <span>React</span><span>Node.js</span><span>MongoDB</span><span>Docker</span><span>IBM Cloud</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Sathvik6323" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="prompt">$ nfc-connect</div>
+          <h3>NFC-Connect</h3>
+          <p>Two-tag NFC system for seamless Bluetooth speaker switching between PC and phone. Python server + PowerShell automation solving Windows Bluetooth stack limitations.</p>
+          <div class="project-tags">
+            <span>Python</span><span>PowerShell</span><span>NFC</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Sathvik6323" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header terminal-line">
+        <span class="prompt">sathvik@portfolio:~$</span>
+        <span class="cmd">skills --list</span>
+      </div>
+      <div class="skills-group">
+        <h4>Production Experience</h4>
+        <div class="tags">
+          <span>React</span><span>Node.js</span><span>Express</span>
+          <span>Python</span><span>JavaScript</span><span>SQL</span>
+          <span>PostgreSQL</span><span>Oracle</span><span>Docker</span><span>Git</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <h4>Trained In</h4>
+        <div class="tags">
+          <span>Java</span><span>Spring Boot</span><span>Hibernate</span>
+          <span>TypeScript</span><span>C/C++</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <h4>Cloud & Tools</h4>
+        <div class="tags">
+          <span>AWS</span><span>Oracle Cloud</span><span>IBM Cloud Code Engine</span>
+          <span>Google Apps Script</span><span>Playwright</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header terminal-line">
+        <span class="prompt">sathvik@portfolio:~$</span>
+        <span class="cmd">cat experience.md</span>
+      </div>
+      <div class="exp-item">
+        <h3>Advanced App Engineering</h3>
+        <div class="meta">Accenture (Client: Intuit) · Oct 2024 – Present · Bengaluru, India</div>
+        <ul>
+          <li>Built a UI-based automation extension for MyOSP platform enabling bulk worker lifecycle updates (onboarding, termination, rehires) for a 9,000-worker ecosystem — delivered in 4 days vs projected 10</li>
+          <li>Reduced manual processing time from 2 minutes to 15 seconds (87% reduction), automating 300+ monthly requests</li>
+          <li>Responsible for production validation and defect management, coordinating with engineering and operations teams</li>
+          <li>Orchestrated release testing and UI validation ensuring zero-defect deployments for critical financial service updates</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header terminal-line">
+        <span class="prompt">sathvik@portfolio:~$</span>
+        <span class="cmd">echo $CONTACT</span>
+      </div>
+      <div class="separator">~</div>
+      <div class="links">
+        <a href="https://github.com/Sathvik6323" target="_blank">GitHub ↗</a>
+        <a href="https://linkedin.com/in/sathvikmallela" target="_blank">LinkedIn ↗</a>
+        <a href="mailto:20cs01061@iitbbs.ac.in">Email ↗</a>
+        <a href="tel:+919398500047">+91 9398500047</a>
+        <a href="resume.pdf" target="_blank">Resume ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 Sathvik Mallela &nbsp;·&nbsp; Built with &#9001;html&#9002; on GitHub Pages
+    </div>
+  </footer>
+
+  <script>
+    // Typewriter
+    const text = 'Full Stack Engineer  |  IIT BBS CS\'24  |  Ex-Accenture (Intuit)';
+    const el = document.getElementById('typewriter');
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        el.innerHTML = text.substring(0, i + 1) + '<span class="cursor-blink"></span>';
+        i++;
+        setTimeout(type, 40 + Math.random() * 30);
+      } else {
+        el.innerHTML = text + '<span class="cursor-blink"></span>';
+      }
+    }
+    setTimeout(type, 600);
+
+    // Nav active state on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+    function updateNav() {
+      let current = '';
+      sections.forEach(s => {
+        const top = s.offsetTop - 120;
+        if (scrollY >= top) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    }
+    window.addEventListener('scroll', updateNav);
+    updateNav();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
